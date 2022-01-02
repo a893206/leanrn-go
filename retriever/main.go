@@ -69,7 +69,7 @@ func inspect(r Retriever) {
 	case *mock.Retriever:
 		fmt.Println("Contents:", v.Contents)
 	case *real2.Retriever:
-		fmt.Println("USerAgent:", v.UserAgent)
+		fmt.Println("UserAgent:", v.UserAgent)
 	}
 	fmt.Println()
 }
