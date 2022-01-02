@@ -33,8 +33,10 @@ func main() {
 	root.Right.Left.SetValue(4)
 
 	root.Traverse()
-	fmt.Println()
-	myRoot := myTreeNode{&root}
-	myRoot.postOrder()
-	fmt.Println()
+
+	nodeCount := 0
+	root.TraverseFunc(func(n *tree.Node) {
+		nodeCount++
+	})
+	fmt.Println("Node count:", nodeCount)
 }
