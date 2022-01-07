@@ -1,6 +1,7 @@
 package filelisting
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -21,8 +22,13 @@ func (e userError) Message() string {
 
 func HandleFileList(writer http.ResponseWriter,
 	request *http.Request) error {
-	if strings.Index(request.URL.Path, prefix) != 0 {
-		return userError("Path must start with " + prefix)
+	fmt.Println()
+	if strings.Index(
+		request.URL.Path, prefix) != 0 {
+		return userError(
+			fmt.Sprintf("path %s must start "+
+				"with %s",
+				request.URL.Path, prefix))
 	}
 	path := request.URL.Path[len(prefix):]
 	file, err := os.Open(path)

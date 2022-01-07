@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"errors"
 	"fmt"
 	"learngo/functional/fib"
 	"os"
@@ -12,20 +11,25 @@ func tryDefer() {
 	for i := 0; i < 100; i++ {
 		defer fmt.Println(i)
 		if i == 30 {
-			panic("printed too many")
+			// Uncomment panic to see
+			// how it works with defer
+			// panic("printed too many")
 		}
 	}
 }
 
 func writeFile(filename string) {
-	file, err := os.OpenFile(filename, os.O_EXCL|os.O_CREATE, 0666)
+	file, err := os.OpenFile(filename,
+		os.O_EXCL|os.O_CREATE|os.O_WRONLY, 0666)
 
-	err = errors.New("this is custom error")
 	if err != nil {
 		if pathError, ok := err.(*os.PathError); !ok {
 			panic(err)
 		} else {
-			fmt.Printf("%s, %s, %s\n", pathError.Op, pathError.Path, pathError.Err)
+			fmt.Printf("%s, %s, %s\n",
+				pathError.Op,
+				pathError.Path,
+				pathError.Err)
 		}
 		return
 	}
@@ -41,5 +45,6 @@ func writeFile(filename string) {
 }
 
 func main() {
+	tryDefer()
 	writeFile("fib.txt")
 }
