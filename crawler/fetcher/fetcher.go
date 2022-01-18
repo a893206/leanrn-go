@@ -11,9 +11,13 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"time"
 )
 
+var rateLimiter = time.Tick(10 * time.Millisecond)
+
 func Fetch(url string) ([]byte, error) {
+	<-rateLimiter
 	client := &http.Client{}
 	newUrl := strings.Replace(url, "http://", "https://", 1)
 	req, err := http.NewRequest("GET", newUrl, nil)
@@ -21,7 +25,7 @@ func Fetch(url string) ([]byte, error) {
 		return nil, err
 	}
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36")
-	req.Header.Add("cookie", "sid=e2dfdde9-a796-4864-9c83-9780584a43ee; ec=WNfofO7o-1642522510650-aff210bca6d541352711054; FSSBBIl1UgzbN7NO=52OsBuNaDzQteWqO0cRH.NAVPm92J4iMUd9WPtcsGti6nBXGGgWItVGA6P5JZN.I9q2a97W6BEBClrrLVANvLIq; Hm_lvt_2c8ad67df9e787ad29dbd54ee608f5d2=1642522526; _exid=hAXoXW4vrBeQ+hWfYR2e4hrZIY5hfz4QNMdCr9ILSvO5D4ifjWuvqlU646vBjoOGPkaPYa1mW+IPs1zC7+yOjw==; _efmdata=ISFqPTI7W2q1c09hdpwQGkBS2ZvD4dEQqhGAWW0ajeNhVYjyVBD9IUcExOlaWK2P9Mhp3bY3wCXGoeEqwWZU6KFdYIqQKpy8iTIrHqbks9I=; Hm_lpvt_2c8ad67df9e787ad29dbd54ee608f5d2=1642522588; FSSBBIl1UgzbN7NP=538M.Jbob_ulqqqm5MGMicaX8a09muC0Hiuzcc7moAMeBqESChXTis7sKzJEME5Rfc86MNGm5HjyT_PE5lguGiT7S1RmbXTpgw92efGWY8dRzlSBiSyfKPremDxTE1JyTcgBbmm0.w4vdewlBKXe4Z03mmamk0ebeAXCrcyGKMxtrxGtElw5lYxduj9BE5spnGJOmLIpPkOsOdQcP4ipzRk3D91XQwWHL7_CPPCYo6EDAinewwrfBeIwgyQsC317gA")
+	req.Header.Add("cookie", "sid=e2dfdde9-a796-4864-9c83-9780584a43ee; ec=WNfofO7o-1642522510650-aff210bca6d541352711054; FSSBBIl1UgzbN7NO=52OsBuNaDzQteWqO0cRH.NAVPm92J4iMUd9WPtcsGti6nBXGGgWItVGA6P5JZN.I9q2a97W6BEBClrrLVANvLIq; Hm_lvt_2c8ad67df9e787ad29dbd54ee608f5d2=1642522526; _exid=HbtnWDiftrTREtAWgEk1oHYeDkpESwVDzhDVLG1kmfzVrwM8UtwcE/H8gSmXxzZOtiEFo//jEe0KZ0mPerZ8bA==; _efmdata=ISFqPTI7W2q1c09hdpwQGkBS2ZvD4dEQqhGAWW0ajeNhVYjyVBD9IUcExOlaWK2P84mIeOmKGLq49OeE0uA9ejBM40CDdHoHr9s99dntQnc=; FSSBBIl1UgzbN7NP=538MTOKobe3Qqqqm5MPZSyG7coZL8KTXOjsqtDWVDGQsKcDMvb3yFt8xq7k8ctWpZkaq9L.SufA9Y6kVhPa0diuc5f5yF8rgQn5084hmpFHw0PFHsBYjxt.yw3W0smKPzMC.R1T8aDOVIe2CXczRhll7u4POqVDi.0RCiMu44kePriRtSe8a4N3cRDKjYNBodQQzGPc9in7yqs4MJkHXWU2PTdFEsjHxbIfPDFe9_9ZwDL9Y1bcda1Z_nCFAu9.2da; Hm_lpvt_2c8ad67df9e787ad29dbd54ee608f5d2=1642526088")
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
