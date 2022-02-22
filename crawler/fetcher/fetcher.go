@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-var rateLimiter = time.Tick(10 * time.Millisecond)
+var rateLimiter = time.Tick(500 * time.Millisecond)
 
 func Fetch(url string) ([]byte, error) {
 	<-rateLimiter
@@ -25,7 +25,7 @@ func Fetch(url string) ([]byte, error) {
 		return nil, err
 	}
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36")
-	req.Header.Add("cookie", "sid=8b7c2261-7ed5-4838-abba-562fc11507b1; Hm_lvt_2c8ad67df9e787ad29dbd54ee608f5d2=1644603887; ec=9rUSJZoo-1644603894919-9fe63703ce621-1502667137; FSSBBIl1UgzbN7NO=5IXzbntbJ87h5UnPdL.g2oB_qDEPN0kSOmE0RbhnNOgRIsiVGc2NNwnzUfxJYJJTm7WipjWe.85FoxGt9kHP_gG; _exid=Z/xFNJVbwwq/NHVrspvWQlIt4x2JEsqf6Wb0b6tpYFcsx3WL15cQiGOBVeSWFRo7i8BHgED/loa9xuWTYbzZ3g==; _efmdata=6+d7P05WU/IcoKeRKgZGMBxNQSm81jkwATq4tKYdNpDWIEfmg3Q6aiLbMQJwtarMCrb23pnNqFk8zY4j9rc+Z3qFfNnRKzdqVc8QnpDnT+w=; Hm_lpvt_2c8ad67df9e787ad29dbd54ee608f5d2=1644603951; FSSBBIl1UgzbN7NP=53GFjHCEDjOLqqqm5_G9xaa9X048bRqQPV5Z.XVUcYbcED0H_d4JquDRQrUTT8id_rKABD6_ZKn38UokcYaMTbWgurYqBFWiLObJNiT0vUTj.xwwJGdwGyY5w3rspklWVP9MEU7MF1MjTDYumIc064ZeghM_tvzl_YJFj79yyliLl3YfoaWh8fghdgr2QRBk1.6B2u.skrc6viDBnr6HOARB5rJ2K7JlS_rp58pgKEB7irDWDdnu4AN5SMgY7Td9KW")
+	req.Header.Add("cookie", "sid=2fc02ffb-424d-4682-b1c3-31c4bd265bcf; Hm_lvt_2c8ad67df9e787ad29dbd54ee608f5d2=1645542452; ec=t7Na8bIT-1645542456924-f031238cf1e81534899366; FSSBBIl1UgzbN7NO=5aZEePwpRF8Gi5U3s1FiK4WUckXRx6VJAyjOlIG.TkbDFvy0YzPPhvkQlsgZ_iNcnA_WrAF5mlpkH5LbLwpN20a; _exid=3qX+oWTIVDvB/CIBWrIYSrMjfTCoLJL10sj/rc1KG8eeNgfHs0JFIGcYas9LydOTBwE/UQZHdDalJuCpyM+j/w==; _efmdata=tBm3Fl4DBeTs696v1kWZEbBzNbdddqEDbfqvO+HiXDMa5jKo6/JW4MiApZbfkANktXlIFn835DYk9FQJr6mNEjHaw3Z8UESmXC/cCC/rR3g=; Hm_lpvt_2c8ad67df9e787ad29dbd54ee608f5d2=1645543095; FSSBBIl1UgzbN7NP=53fs5BCEVd.GqqqmdEGWMPAkF4Yu.b3wjzzkpKnt.5TdhsRsTOODtBiMcn3im41hbubbhB5KAR41soHS1yyzOq6ql8GaG3CrjABHMelSR1lLsla7ICERBmrkmd5tYYQuSN4fu.Y6RcqxbszZ7gPeuz1QgBtistqwc7jI6LgZd4vTSRvnwo_zpQcK5o1hhIH7pHG5ipd99x48HSALtTjwELVYWxjdYxzktKIvzdiKBuPCmteqIsarIkJLO7i1xzHXcE")
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
