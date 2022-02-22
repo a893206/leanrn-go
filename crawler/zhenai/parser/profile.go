@@ -9,8 +9,9 @@ import (
 )
 
 var re = regexp.MustCompile(`<div class="des f-cl"[^>]*>([^<]+)</div>`)
+var idUrlRe = regexp.MustCompile(`https://album.zhenai.com/u/([\d]+)`)
 
-func ParseProfile(contents []byte, name string) engine.ParseResult {
+func ParseProfile(contents []byte, url string, name string) engine.ParseResult {
 	profile := model.Profile{}
 	profile.Name = name
 
@@ -30,7 +31,14 @@ func ParseProfile(contents []byte, name string) engine.ParseResult {
 	profile.Income = list[5]
 
 	result := engine.ParseResult{
-		Items: []interface{}{profile},
+		Items: []engine.Item{
+			{
+				Url:     url,
+				Type:    "zhenai",
+				Id:      string(idUrlRe.FindSubmatch([]byte(url))[1]),
+				Payload: profile,
+			},
+		},
 	}
 
 	return result
